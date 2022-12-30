@@ -1,0 +1,69 @@
+
+type Customer {
+  id: ID!
+  agentID:ID
+  name:String! @fake(type: firstName, locale: ru)
+  lastName:String @fake(type: lastName, locale: ru)
+  phone:String! @fake(type:phoneNumber, locale: ru)
+  comleted:Boolean!
+}
+
+type Agent {
+  id: ID!
+  name:String! @fake(type: firstName, locale: ru)
+  lastName:String @fake(type: lastName, locale: ru)
+  phone:String! @fake(type:phoneNumber, locale: ru)
+}
+
+type Route {
+  id: ID!
+  name:String! @examples(values: ["Шхеры", "Валаам", "Комплекс", "Частный"])
+  duration:Int@fake(type:number, options:{minNumber:3,maxNumber:6})
+}
+
+type Boat {
+  id: ID!
+  name:String! @examples(values: ["Вихрь", "Шторм", "Блеск", "Беспечный"])
+  seats:Int@fake(type:number, options:{minNumber:4,maxNumber:6})
+  active:Boolean
+}
+
+type Order {
+  id: ID!
+  name:String!
+  customerID:ID!
+  agentID:ID
+  route:String!
+	eventDate:String!@fake(type:futureDate)
+  orderDate:String!@fake(type:recentDate)
+}
+# type Company {
+#   id: ID
+#   name: String @fake(type: companyName)
+#   industry: String
+#     @examples(values: ["IT", "Manufacturing", "Medicine", "Media"])
+#   employees: [Employee!] @listLength(min: 5, max: 10)
+# }
+
+# type Employee {
+#   id: ID
+#   firstName: String @fake(type: firstName, locale: en_CA)
+#   lastName: String @fake(type: lastName, locale: en_CA)
+#   address: String @fake(type: streetAddress, options: { useFullAddress: true })
+#   subordinates: [Employee!] @listLength(min: 0, max: 3)
+#   company: Company
+# }
+
+type Query {
+  allOrders:[Order!]
+  allBoats:[Boat!]
+  allRoutes:[Route!]
+  allAgents:[Agent!]
+  allCustomers:[Customer!]
+  agent(id: ID): Agent
+  order(id: ID): Order
+  route(id: ID): Route
+  boat(id: ID): Boat
+  customer(id: ID): Customer
+  # allCompanies: [Company!]
+}
